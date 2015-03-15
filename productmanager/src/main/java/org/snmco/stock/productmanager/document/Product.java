@@ -21,7 +21,7 @@ public class Product {
     private byte[] image;
 
     @Field(type = FieldType.String)
-    private String profuctreference;
+    private String productreference;
 
     @Field(type = FieldType.String)
     private String sqlid;
@@ -58,12 +58,12 @@ public class Product {
         this.image = image;
     }
 
-    public String getProfuctreference() {
-        return profuctreference;
+    public String getProductreference() {
+        return productreference;
     }
 
-    public void setProfuctreference(String profuctreference) {
-        this.profuctreference = profuctreference;
+    public void setProductreference(String productreference) {
+        this.productreference = productreference;
     }
 
     public String getSqlid() {
