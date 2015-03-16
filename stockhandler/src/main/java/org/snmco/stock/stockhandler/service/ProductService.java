@@ -20,7 +20,7 @@ public class ProductService {
     private ProductRepository productRepository;
 
     @Transactional(readOnly = true)
-    public Page<Product> listAll(int page, int size){
+    public Page<Product> listAll(int page, int size) {
 
         Pageable pageable = new PageRequest(page, size);
         return productRepository.findAll(pageable);
@@ -28,8 +28,7 @@ public class ProductService {
     }
 
     @Transactional
-    public void updateStock(String productId, int stockSize)
-    {
+    public void updateStock(String productId, int stockSize) {
         Optional<Product> productOptional = Optional.of(productRepository.findOne(productId));
         if (productOptional.isPresent()) {
             Product product = productOptional.get();
@@ -41,5 +40,10 @@ public class ProductService {
     @Transactional
     public void batchAddProducts(List<Product> products) {
         productRepository.save(products);
+    }
+
+    @Transactional
+    public Product load(String productId) {
+        return productRepository.findOne(productId);
     }
 }

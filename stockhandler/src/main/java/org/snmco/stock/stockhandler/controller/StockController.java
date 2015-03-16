@@ -30,6 +30,11 @@ public class StockController {
             return productService.listAll(page, size);
     }
 
+    @RequestMapping(value = "/{productId}", method = RequestMethod.GET)
+    public Product load(@PathVariable String productId) {
+        return productService.load(productId);
+    }
+
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public void updateStock(@RequestBody() @Valid Product product) {
          productService.updateStock(product.getId(), product.getStock());
