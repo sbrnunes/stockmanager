@@ -16,13 +16,11 @@ public class ProductController {
     @RequestMapping(method = RequestMethod.GET)
     public Page<Product> list(@RequestParam(value = "page", defaultValue = "0") int page,
                        @RequestParam(value = "size", defaultValue = "10") int size) {
-
         return productService.findProducts(page, size);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public void save(@RequestBody(required = true) Product product){
-
+    public void save(@RequestBody(required = true) Product product) {
         productService.save(product);
     }
 }

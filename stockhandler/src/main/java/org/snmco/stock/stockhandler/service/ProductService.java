@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -33,8 +34,12 @@ public class ProductService {
         if (productOptional.isPresent()) {
             Product product = productOptional.get();
             product.setStock(stockSize);
-
             productRepository.save(product);
         }
+    }
+
+    @Transactional
+    public void batchAddProducts(List<Product> products) {
+        productRepository.save(products);
     }
 }

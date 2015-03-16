@@ -4,16 +4,20 @@ package org.snmco.stock.stockhandler.entity;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Version;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Product {
 
     @Id
+    @NotNull
     private String id;
 
     @Version
     private int version;
 
+    @Min(0)
     private Integer stock;
 
     private String name;
