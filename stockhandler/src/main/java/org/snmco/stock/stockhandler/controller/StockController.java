@@ -24,25 +24,30 @@ public class StockController {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET)
-    public Page<Product> list(@RequestParam(value = "page", defaultValue = "0") int page,
-                              @RequestParam(value = "size", defaultValue = "10") int size) {
-            return productService.listAll(page, size);
+    @RequestMapping(value="/{companyId}", method = RequestMethod.GET)
+    public Page<Product> list(@PathVariable String companyId,
+                    @RequestParam(value = "page", defaultValue = "0") int page,
+                    @RequestParam(value = "size", defaultValue = "10") int size) {
+            return productService.findByCompany(companyId, page, size);
     }
 
     @RequestMapping(value = "/{productId}", method = RequestMethod.GET)
     public Product load(@PathVariable String productId) {
+        // TODO security : load company from customer and verify has access to product
         return productService.load(productId);
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public void updateStock(@RequestBody() @Valid Product product) {
+        // TODO security : load company from customer and verify has access to product
          productService.updateStock(product.getId(), product.getStock());
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public void createStocks(@RequestBody() List<Product> products) {
-        productService.batchAddProducts(products);
+    @RequestMapping(value="/{companyId}",method = RequestMethod.POST)
+    public void createStocks(
+            @PathVariable String companyId,
+            @RequestBody() List<Product> products) {
+        productService.batchAddProducts(companyId, products);
     }
 
 

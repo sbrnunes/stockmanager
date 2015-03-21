@@ -60,7 +60,7 @@ public class Product {
         return company;
     }
 
-    public void setCompany(Company company) {
+    protected void setCompany(Company company) {
         this.company = company;
     }
 }

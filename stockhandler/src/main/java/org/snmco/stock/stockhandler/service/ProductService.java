@@ -1,6 +1,8 @@
 package org.snmco.stock.stockhandler.service;
 
+import org.snmco.stock.stockhandler.entity.Company;
 import org.snmco.stock.stockhandler.entity.Product;
+import org.snmco.stock.stockhandler.reppository.CompanyRepository;
 import org.snmco.stock.stockhandler.reppository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,14 +21,18 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private CompanyRepository companyRepository;
+
     @Transactional(readOnly = true)
-    public Page<Product> listAll(int page, int size) {
+    public Page<Product> findByCompany(String companyId, int page, int size) {
 
         Pageable pageable = new PageRequest(page, size);
-        return productRepository.findAll(pageable);
+        return productRepository.findByCompany(companyId, pageable);
 
     }
 
+    // TODO security : link to company
     @Transactional
     public void updateStock(String productId, int stockSize) {
         Optional<Product> productOptional = Optional.of(productRepository.findOne(productId));
@@ -37,11 +43,15 @@ public class ProductService {
         }
     }
 
+    // TODO security : link to company
     @Transactional
-    public void batchAddProducts(List<Product> products) {
+    public void batchAddProducts(String companyId, List<Product> products) {
+        final Company company = companyRepository.findOne(companyId);
+        products.stream().forEach(p -> company.addProduct(p));
         productRepository.save(products);
     }
 
+    // TODO security : link to company
     @Transactional
     public Product load(String productId) {
         return productRepository.findOne(productId);
