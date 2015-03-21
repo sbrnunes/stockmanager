@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/company")
 public class CompanyController {
@@ -22,14 +24,15 @@ public class CompanyController {
 
 
     @RequestMapping(value = "/{companyId}", method = RequestMethod.GET)
-    public Customer load(@PathVariable String companyId) {
+    public Company load(@PathVariable String companyId) {
         return companyService.load(companyId);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public void createCompany(
-            @RequestBody() Company company) {
-        companyService.addCompany(company);
+    public Company createCompany(
+            @RequestBody() @Valid Company company) {
+        company.initForCreate();
+        return companyService.addCompany(company);
     }
 
 

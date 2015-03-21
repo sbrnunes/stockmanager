@@ -1,5 +1,7 @@
 package org.snmco.stock.stockhandler.entity;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -69,11 +71,20 @@ public class Customer {
         this.address = address;
     }
 
+    @JsonIgnore
     public Company getCompany() {
         return company;
     }
 
+    @JsonIgnore
     protected void setCompany(Company company) {
         this.company = company;
+    }
+
+    // TODO HATOAS : return company resource
+    @JsonGetter("companyId")
+    public String getCompanyId()
+    {
+        return company.getId();
     }
 }

@@ -23,7 +23,8 @@ public class CustomerService {
     @Transactional(readOnly = true)
     public Page<Customer> findByCompany(String companyId, int page, int size) {
         Pageable pageable = new PageRequest(page, size);
-        return customerRepository.findByCompany(companyId, pageable);
+        Company company = companyRepository.findOne(companyId);
+        return customerRepository.findByCompany(company, pageable);
     }
 
     // TODO security : link to company
@@ -34,8 +35,9 @@ public class CustomerService {
 
     // TODO security : link to company
     @Transactional
-    public void addCustomer(String companyId, Customer customer) {
+    public Customer addCustomer(String companyId, Customer customer) {
         Company company = companyRepository.findOne(companyId);
         company.addCustomer(customer);
+        return customerRepository.save(customer);
     }
 }

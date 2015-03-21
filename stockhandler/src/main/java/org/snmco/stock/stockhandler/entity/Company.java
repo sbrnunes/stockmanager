@@ -1,5 +1,7 @@
 package org.snmco.stock.stockhandler.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -9,7 +11,9 @@ import java.util.List;
 public class Company {
 
     @Id
-    private String companyId;
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid")
+    private String id;
 
     @Version
     private int version;
@@ -23,14 +27,14 @@ public class Company {
     private List<Product> products = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "company")
-    private List<Customer> customers = new ArrayList<>();;
+    private List<Customer> customers = new ArrayList<>();
 
-    public String getCompanyId() {
-        return companyId;
+    public String getId() {
+        return id;
     }
 
-    public void setCompanyId(String companyId) {
-        this.companyId = companyId;
+    protected void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -77,4 +81,12 @@ public class Company {
         customer.setCompany(this);
     }
 
+    /**
+     * As the entities are used as json object, it need protective cleanup
+     */
+    public void initForCreate() {
+        this.id = null;
+        products = new ArrayList<>();
+        customers = new ArrayList<>();;
+    }
 }

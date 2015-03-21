@@ -26,8 +26,8 @@ public class CustomerController {
     }
 
 
-    @RequestMapping(value="/{companyId}", method = RequestMethod.GET)
-    public Page<Customer> list(@PathVariable String companyId,
+    @RequestMapping(method = RequestMethod.GET)
+    public Page<Customer> list(@RequestParam(value = "companyId", required = true) String companyId,
                     @RequestParam(value = "page", defaultValue = "0") int page,
                     @RequestParam(value = "size", defaultValue = "10") int size) {
             return customerService.findByCompany(companyId, page, size);
@@ -40,10 +40,10 @@ public class CustomerController {
     }
 
     @RequestMapping(value="/{companyId}",method = RequestMethod.POST)
-    public void createCustomer(
+    public Customer createCustomer(
             @PathVariable String companyId,
             @RequestBody() Customer customer) {
-        customerService.addCustomer(companyId, customer);
+        return customerService.addCustomer(companyId, customer);
     }
 
 

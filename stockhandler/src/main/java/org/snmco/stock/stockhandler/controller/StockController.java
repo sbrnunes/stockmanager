@@ -24,8 +24,8 @@ public class StockController {
     }
 
 
-    @RequestMapping(value="/{companyId}", method = RequestMethod.GET)
-    public Page<Product> list(@PathVariable String companyId,
+    @RequestMapping(method = RequestMethod.GET)
+    public Page<Product> list(@RequestParam(value = "companyId", required = true) String companyId,
                     @RequestParam(value = "page", defaultValue = "0") int page,
                     @RequestParam(value = "size", defaultValue = "10") int size) {
             return productService.findByCompany(companyId, page, size);
@@ -38,9 +38,9 @@ public class StockController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public void updateStock(@RequestBody() @Valid Product product) {
+    public Product updateStock(@RequestBody() @Valid Product product) {
         // TODO security : load company from customer and verify has access to product
-         productService.updateStock(product.getId(), product.getStock());
+         return productService.updateStock(product.getId(), product.getStock());
     }
 
     @RequestMapping(value="/{companyId}",method = RequestMethod.POST)

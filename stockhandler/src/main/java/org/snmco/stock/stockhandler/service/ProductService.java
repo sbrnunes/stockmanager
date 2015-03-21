@@ -28,18 +28,22 @@ public class ProductService {
     public Page<Product> findByCompany(String companyId, int page, int size) {
 
         Pageable pageable = new PageRequest(page, size);
-        return productRepository.findByCompany(companyId, pageable);
+        Company company = companyRepository.findOne(companyId);
+        return productRepository.findByCompany(company, pageable);
     }
 
     // TODO security : link to company
     @Transactional
-    public void updateStock(String productId, int stockSize) {
+    public Product updateStock(String productId, int stockSize) {
         Optional<Product> productOptional = Optional.of(productRepository.findOne(productId));
         if (productOptional.isPresent()) {
             Product product = productOptional.get();
             product.setStock(stockSize);
             productRepository.save(product);
+            return product;
         }
+        //TODO exception
+        return null;
     }
 
     // TODO security : link to company

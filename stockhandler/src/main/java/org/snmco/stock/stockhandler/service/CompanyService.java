@@ -18,7 +18,7 @@ public class CompanyService {
     }
 
     @Transactional
-    public void addCompany(Company company) {
-        companyRepository.save(company);
+    public Company addCompany(Company company) {
+        return companyRepository.save(company);
     }
 }
