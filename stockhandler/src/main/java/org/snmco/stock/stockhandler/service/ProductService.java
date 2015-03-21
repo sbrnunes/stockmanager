@@ -29,7 +29,6 @@ public class ProductService {
 
         Pageable pageable = new PageRequest(page, size);
         return productRepository.findByCompany(companyId, pageable);
-
     }
 
     // TODO security : link to company
