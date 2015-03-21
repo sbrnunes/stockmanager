@@ -1,5 +1,6 @@
 package org.snmco.stock.productmanager.document;
 
+import org.joda.time.DateTime;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
@@ -7,7 +8,6 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 
 @Document(indexName = "buy", type = "buydef")
 public class Buy {
-
 
     @Id
     private String id;
@@ -26,6 +26,9 @@ public class Buy {
 
     @Field(type = FieldType.String)
     private String note;
+
+    @Field(type = FieldType.Date)
+    private DateTime buyDate;
 
     public String getId() {
         return id;
@@ -73,5 +76,13 @@ public class Buy {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public DateTime getBuyDate() {
+        return buyDate;
+    }
+
+    public void setBuyDate(DateTime buyDate) {
+        this.buyDate = buyDate;
     }
 }

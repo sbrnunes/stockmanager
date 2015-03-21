@@ -1,9 +1,12 @@
 package org.snmco.stock.productmanager.document;
 
+import org.joda.time.DateTime;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
+
+import javax.validation.constraints.NotNull;
 
 @Document(indexName = "sell", type = "selldef")
 public class Sell {
@@ -12,15 +15,19 @@ public class Sell {
     private String id;
 
     @Field(type = FieldType.String)
-    private String prodcutId;
+    @NotNull
+    private String productId;
 
     @Field(type = FieldType.String)
+    @NotNull
     private String customerId;
 
     @Field(type = FieldType.String)
+    @NotNull
     private String companyId;
 
     @Field(type = FieldType.String)
+    @NotNull
     private Integer amount;
 
     @Field(type = FieldType.Double)
@@ -28,6 +35,9 @@ public class Sell {
 
     @Field(type = FieldType.String)
     private String note;
+
+    @Field(type = FieldType.Date)
+    private DateTime sellDate;
 
     public String getId() {
         return id;
@@ -37,12 +47,12 @@ public class Sell {
         this.id = id;
     }
 
-    public String getProdcutId() {
-        return prodcutId;
+    public String getProductId() {
+        return productId;
     }
 
-    public void setProdcutId(String prodcutId) {
-        this.prodcutId = prodcutId;
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     public String getCustomerId() {
@@ -83,5 +93,19 @@ public class Sell {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public DateTime getSellDate() {
+        return sellDate;
+    }
+
+    public void setSellDate(DateTime sellDate) {
+        this.sellDate = sellDate;
+    }
+
+    public void initDate() {
+        if (getSellDate() == null) {
+            setSellDate(new DateTime());
+        }
     }
 }
