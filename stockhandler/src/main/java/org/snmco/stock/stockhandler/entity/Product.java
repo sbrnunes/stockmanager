@@ -1,10 +1,7 @@
 package org.snmco.stock.stockhandler.entity;
 
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Version;
-import javax.validation.constraints.Min;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -17,10 +14,15 @@ public class Product {
     @Version
     private int version;
 
-    @Min(0)
+    @NotNull
     private Integer stock;
 
+    @NotNull
     private String name;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "company_id")
+    private Company company;
 
     public String getId() {
         return id;
@@ -52,5 +54,13 @@ public class Product {
 
     public void setVersion(int version) {
         this.version = version;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 }
