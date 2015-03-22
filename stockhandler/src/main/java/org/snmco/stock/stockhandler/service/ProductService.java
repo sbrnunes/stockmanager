@@ -50,7 +50,7 @@ public class ProductService {
     @Transactional
     public void batchAddProducts(String companyId, List<Product> products) {
         final Company company = companyRepository.findOne(companyId);
-        products.stream().forEach(p -> company.addProduct(p));
+        products.stream().forEach(company::addProduct);
         productRepository.save(products);
     }
 
