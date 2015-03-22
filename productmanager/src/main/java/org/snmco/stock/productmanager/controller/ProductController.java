@@ -23,4 +23,10 @@ public class ProductController {
     public void save(@RequestBody(required = true) Product product) {
         productService.save(product);
     }
+
+    @RequestMapping(value="/{productId}", method = RequestMethod.DELETE)
+    public void delete(@PathVariable String productId)
+    {
+        productService.delete(productId);
+    }
 }
